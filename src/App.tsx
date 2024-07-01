@@ -1,5 +1,12 @@
 import "./App.css";
 import { FC, useState } from "react";
+import emojis from "./json/emojis.json";
+
+interface Emoji {
+  title: string;
+  symbol: string;
+  keywords: string;
+}
 
 const App: FC = () => {
   const [_, setEmojiQuery] = useState("");
@@ -16,6 +23,11 @@ const App: FC = () => {
         placeholder="Search for an emoji..."
         onChange={handleQueryChange}
       />
+      <div className="emojis">
+        {emojis.map((emoji: Emoji) => (
+          <p>{emoji.symbol}</p>
+        ))}
+      </div>
     </div>
   );
 };
