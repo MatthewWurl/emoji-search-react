@@ -10,6 +10,16 @@ const App: FC = () => {
   const [emojiData, setEmojiData] = useState<Emoji[]>([]);
   const [emojiQuery, setEmojiQuery] = useState("");
 
+  const filteredEmojis = emojiData.filter((emoji) => {
+    const queryWords = emojiQuery.toLowerCase().split(" ");
+
+    return queryWords.every((queryWord) =>
+      emoji.keywords.some((keyword) =>
+        keyword.replace(/_/g, " ").toLowerCase().includes(queryWord)
+      )
+    );
+  });
+
   useEffect(() => {
     fetch("https://unpkg.com/emojilib@3.0.12/dist/emoji-en-US.json")
       .then((res) => res.json())
@@ -18,8 +28,6 @@ const App: FC = () => {
           symbol: x,
           keywords: y as string[],
         }));
-
-        console.log(formattedData);
 
         setEmojiData(formattedData);
       })
@@ -38,11 +46,11 @@ const App: FC = () => {
         placeholder="Search for an emoji..."
         onChange={handleQueryChange}
       />
-      {/* <div className="emojis">
-        {emojis.map((emoji: Emoji, index: number) => (
+      <div className="emojis">
+        {filteredEmojis.map((emoji, index) => (
           <p key={index}>{emoji.symbol}</p>
         ))}
-      </div> */}
+      </div>
     </div>
   );
 };
