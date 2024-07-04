@@ -1,10 +1,7 @@
 import "./App.css";
 import { FC, useEffect, useState } from "react";
-
-interface Emoji {
-  symbol: string;
-  keywords: string[];
-}
+import EmojiCard from "./EmojiCard";
+import { Emoji } from "./types";
 
 const App: FC = () => {
   const [emojiData, setEmojiData] = useState<Emoji[]>([]);
@@ -48,7 +45,7 @@ const App: FC = () => {
       />
       <div className="emojis">
         {filteredEmojis.map((emoji, index) => (
-          <p key={index}>{emoji.symbol}</p>
+          <EmojiCard key={index} emoji={emoji} />
         ))}
       </div>
     </div>
